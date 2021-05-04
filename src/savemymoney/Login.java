@@ -95,7 +95,7 @@ public class Login extends javax.swing.JFrame {
                             .add(txtUsername)
                             .add(txtPassword)))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(0, 87, Short.MAX_VALUE)
+                        .add(0, 187, Short.MAX_VALUE)
                         .add(btnExit)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(btnRegister)
@@ -106,7 +106,7 @@ public class Login extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(55, 55, 55)
+                .add(96, 96, 96)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel2)
                     .add(txtUsername, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -119,7 +119,7 @@ public class Login extends javax.swing.JFrame {
                     .add(btnLogin)
                     .add(btnRegister)
                     .add(btnExit))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         pack();
