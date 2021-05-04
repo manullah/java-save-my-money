@@ -143,17 +143,20 @@ public class Login extends javax.swing.JFrame {
             rs = pst.executeQuery();
             
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Login Successful!");
+                new Home().setVisible(true);
+                this.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Gagal");
+                JOptionPane.showMessageDialog(null, "Wrong credential");
             }
         } catch (Exception e) {
             System.out.println("Login Failed " + e);
+            JOptionPane.showMessageDialog(null, "Something Whent Wrong");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        // TODO add your handling code here:
+        new Register().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     /**
