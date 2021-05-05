@@ -17,11 +17,12 @@ Application to recap data storage and spending money.
   - [x] Done
 
 ### 3. Home
-  User can see his balance. There is a button to save money and there is also a button for spending. User can view the history of his income and spending.
+  User can see his balance. There is a button to save money and there is also a button for spending. User can view the history of his income and spending. users can also filter and sort history data
   * After pressing the save button, it will be redirected to save my money page
   * After pressing the spending button, it will be redirected to save spending my money page
   * The data displayed is a history of income and spending, balance
-  * User can sorting his history by range date
+  * User can filter his history by range date
+  * User can sorting his history by desc and asc (default desc)
   - [ ] Done
 
 ### 4. Save my Money
