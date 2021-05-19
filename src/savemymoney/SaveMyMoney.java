@@ -10,6 +10,11 @@ package savemymoney;
  * @author pengg
  */
 public class SaveMyMoney {
+    
+    public void SaveMyMoney () {
+        
+    }
+
     /**
      * @param args the command line arguments
      */

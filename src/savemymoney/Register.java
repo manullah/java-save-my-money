@@ -126,9 +126,27 @@ public class Register extends javax.swing.JFrame {
             pst.setString(2, txtPassword.getText());
             pst.execute();
             
+            new Login().setVisible(true);
+            this.dispose();
+
             System.out.println("New user is registered!");
         } catch (Exception e) {
             System.out.println("Register Failed " + e);
+        } finally {
+            if (rs != null){
+                 try{
+                    rs.close();
+                 } catch(Exception e){
+                     e.printStackTrace();
+                 }
+            }
+            if (pst != null){
+                try{
+                    pst.close();
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
 

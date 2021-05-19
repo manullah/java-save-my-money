@@ -151,6 +151,21 @@ public class Login extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Login Failed " + e);
             JOptionPane.showMessageDialog(null, "Something Whent Wrong");
+        } finally {
+            if (rs != null){
+                 try{
+                    rs.close();
+                 } catch(Exception e){
+                     e.printStackTrace();
+                 }
+            }
+            if (pst != null){
+                try{
+                    pst.close();
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
