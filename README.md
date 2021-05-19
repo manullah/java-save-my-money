@@ -23,7 +23,7 @@ Application to recap data storage and spending money.
   * The data displayed is a history of income and spending, balance
   * User can filter his history by range date
   * User can sorting his history by desc and asc (default desc)
-  - [ ] Done
+  - [x] Done
 
 ### 4. Save my Money
   Users will be prompted to enter some value for money to be saved.
@@ -32,7 +32,7 @@ Application to recap data storage and spending money.
   * There is a button to choose from what the money is obtained (salary, bonus, gifts from people, other, etc)
   * If the user selects "other", he will be prompted to fill out the form. And the data will be stored in the database (saved to new income category)
   * After click save, system will created data history that category is "income"
-  - [ ] Done
+  - [x] Done
 
 ### 5. Spending my Moeny
   Users will be prompted to enter some value for money to spend.
