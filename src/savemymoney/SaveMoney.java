@@ -5,7 +5,10 @@
  */
 package savemymoney;
 
-import java.awt.Color;
+import java.sql.*;
+import javax.swing.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -13,11 +16,20 @@ import java.awt.Color;
  */
 public class SaveMoney extends javax.swing.JFrame {
 
+    Connection con = null;
+    PreparedStatement pstSelectIncomeCategory = null;
+    PreparedStatement pstInsertIncomeCategory = null;
+    PreparedStatement pstInsertFinancialHistory = null;
+    ResultSet resultIncomeCategory = null;
+    String category;
+    
     /**
      * Creates new form SaveMoney
      */
     public SaveMoney() {
         initComponents();
+        
+        con = DbConnection.ConnectionDB();
     }
 
     /**
@@ -29,37 +41,69 @@ public class SaveMoney extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        btnGroupCategory = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         txtNominal = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        rdbSalary = new javax.swing.JRadioButton();
+        rdbBonus = new javax.swing.JRadioButton();
+        rdbGift = new javax.swing.JRadioButton();
         rdbOther = new javax.swing.JRadioButton();
+        txtOther = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nominal");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("jRadioButton1");
-
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("jRadioButton2");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        txtNominal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                txtNominalActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("jRadioButton3");
+        btnGroupCategory.add(rdbSalary);
+        rdbSalary.setText("Salary");
+        rdbSalary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbSalaryActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(rdbOther);
+        btnGroupCategory.add(rdbBonus);
+        rdbBonus.setText("Bonus");
+        rdbBonus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbBonusActionPerformed(evt);
+            }
+        });
+
+        btnGroupCategory.add(rdbGift);
+        rdbGift.setText("Gift");
+        rdbGift.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbGiftActionPerformed(evt);
+            }
+        });
+
+        btnGroupCategory.add(rdbOther);
         rdbOther.setText("Other");
         rdbOther.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdbOtherActionPerformed(evt);
+            }
+        });
+
+        txtOther.setEditable(false);
+        txtOther.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOtherActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -71,50 +115,139 @@ public class SaveMoney extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNominal, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton1)
-                            .addComponent(rdbOther))))
-                .addContainerGap(93, Short.MAX_VALUE))
+                            .addComponent(rdbBonus)
+                            .addComponent(rdbGift)
+                            .addComponent(rdbSalary)
+                            .addComponent(rdbOther)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNominal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtOther, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addComponent(jButton1)))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(91, 91, 91)
+                .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNominal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addComponent(jRadioButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(rdbSalary)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton3)
+                .addComponent(rdbBonus)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rdbGift)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rdbOther)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOther, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    private void rdbBonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbBonusActionPerformed
+        if (rdbBonus.isSelected()) {
+            category = rdbBonus.getText();
+            txtOther.setEditable(false);
+        }
+    }//GEN-LAST:event_rdbBonusActionPerformed
 
     private void rdbOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbOtherActionPerformed
         if (rdbOther.isSelected()) {
-            txtNominal.setEnabled(false);
-        } else {
-            txtNominal.setBackground(Color.white);
+            txtOther.setEditable(true);
         }
     }//GEN-LAST:event_rdbOtherActionPerformed
+
+    private void rdbSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbSalaryActionPerformed
+        if (rdbSalary.isSelected()) {
+            category = rdbSalary.getText();
+            txtOther.setEditable(false);
+        }
+    }//GEN-LAST:event_rdbSalaryActionPerformed
+
+    private void txtOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOtherActionPerformed
+        
+    }//GEN-LAST:event_txtOtherActionPerformed
+
+    private void txtNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNominalActionPerformed
+        
+    }//GEN-LAST:event_txtNominalActionPerformed
+
+    private void rdbGiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbGiftActionPerformed
+        if (rdbGift.isSelected()) {
+            category = rdbGift.getText();
+            txtOther.setEditable(false);
+        }
+    }//GEN-LAST:event_rdbGiftActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (txtNominal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "You must fill the nominal first!");
+            return;
+        }
+
+        if (btnGroupCategory.getSelection() == null) {
+            JOptionPane.showMessageDialog(null, "You must to choose one!");
+            return;
+        }
+
+        if (rdbOther.isSelected()) {
+            if (txtOther.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "You must fill the other field!");
+                return;
+            }
+            
+            
+            try {
+                category = txtOther.getText();
+                String querySelectIncomeCategory = "SELECT * from income_categories WHERE name LIKE ?;";
+                pstSelectIncomeCategory = con.prepareStatement(querySelectIncomeCategory);
+                pstSelectIncomeCategory.setString(1, category);
+                ResultSet resultIncomeCategory = pstSelectIncomeCategory.executeQuery();
+
+                if (!resultIncomeCategory.next()) {
+                    String queryInsertIncomeCategory = "INSERT INTO income_categories VALUES (?);";
+                    pstInsertIncomeCategory = con.prepareStatement(queryInsertIncomeCategory);
+                    pstInsertIncomeCategory.setString(1, category);
+                    pstInsertIncomeCategory.execute();
+                    System.out.println("New income category is created!");
+                }
+            } catch (Exception e) {
+                System.out.println("Add new income category Failed " + e);
+                JOptionPane.showMessageDialog(null, "Something whent wrong");
+                return;
+            }
+        }
+
+        try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");  
+            
+            String queryInsertFinancialHistory = "INSERT INTO financial_histories VALUES (?, ?, ?, ?);";
+            pstInsertFinancialHistory = con.prepareStatement(queryInsertFinancialHistory);
+            pstInsertFinancialHistory.setString(1, "Income");
+            pstInsertFinancialHistory.setString(2, category);
+            pstInsertFinancialHistory.setString(3, txtNominal.getText());
+            pstInsertFinancialHistory.setString(4, dtf.format(LocalDateTime.now()));
+            pstInsertFinancialHistory.execute();
+           
+            new Home().setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            System.out.println("Add new financial history Failed " + e);
+            JOptionPane.showMessageDialog(null, "Something whent wrong");
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,12 +285,14 @@ public class SaveMoney extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup btnGroupCategory;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton rdbBonus;
+    private javax.swing.JRadioButton rdbGift;
     private javax.swing.JRadioButton rdbOther;
+    private javax.swing.JRadioButton rdbSalary;
     private javax.swing.JTextField txtNominal;
+    private javax.swing.JTextField txtOther;
     // End of variables declaration//GEN-END:variables
 }

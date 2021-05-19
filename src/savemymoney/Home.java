@@ -18,8 +18,8 @@ import javax.swing.table.TableRowSorter;
  */
 public class Home extends javax.swing.JFrame {
 
-    private int id;
     private String type;
+    private String category;
     private int value;
     private String date;
     
@@ -39,8 +39,8 @@ public class Home extends javax.swing.JFrame {
             Table table;
             while(res.next()) {
                 table = new Table(
-                        res.getInt("id"),
                         res.getString("type"),
+                        res.getString("category"),
                         res.getInt("value"),
                         res.getString("date")
                 );
@@ -54,11 +54,11 @@ public class Home extends javax.swing.JFrame {
     public void munculTable(String OrderQuery) {
         ArrayList<Table> tables = ListTables(OrderQuery);
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new Object[] {"ID", "Jenis", "Jumlah", "Tanggal"});
+        model.setColumnIdentifiers(new Object[] {"Jenis", "Kategori", "Jumlah", "Tanggal"});
         Object[] row = new Object[4];
         for (int i = 0; i < tables.size(); i++) {
-            row[0] = tables.get(i).getId();
-            row[1] = tables.get(i).getType();
+            row[0] = tables.get(i).getType();
+            row[1] = tables.get(i).getCategory();
             row[2] = tables.get(i).getValue();
             row[3] = tables.get(i).getDate();
             
@@ -264,12 +264,12 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        new SaveMyMoney().setVisible(true);
+        new SaveMoney().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//        new SpendMyMoney().setVisible(true);
+//        new SpendMoney().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

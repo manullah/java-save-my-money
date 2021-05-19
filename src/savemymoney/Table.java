@@ -10,22 +10,22 @@ package savemymoney;
  * @author Symp
  */
 public class Table {
-    private int id;
     private String type;
+    private String category;
     private int value;
     private String date;
     
-    public Table(int id, String type, int value, String date) {
-        this.id = id;
+    public Table(String type, String category, int value, String date) {
         this.type = type;
+        this.category = category;
         this.value = value;
         this.date = date;
     }
-    public int getId() {
-        return id;
-    }
     public String getType() {
         return type;
+    }
+    public String getCategory() {
+        return category;
     }
     public int getValue() {
         return value;
