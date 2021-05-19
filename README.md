@@ -41,4 +41,4 @@ Application to recap data storage and spending money.
   * There is a button to choose from what the money is used (food & drink, health, charity, other, etc)
   * If the user selects "other", he will be prompted to fill out the form. And the data will be stored in the database (saved to new spending category)
   * After click save, system will created data history that category is "spending"
-  - [ ] Done
+  - [x] Done
