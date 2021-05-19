@@ -210,10 +210,10 @@ public class SaveMoney extends javax.swing.JFrame {
             
             try {
                 category = txtOther.getText();
-                String querySelectIncomeCategory = "SELECT * from income_categories WHERE name LIKE ?;";
-                pstSelectIncomeCategory = con.prepareStatement(querySelectIncomeCategory);
+                String sql = "SELECT * from income_categories WHERE name LIKE ?;";
+                pstSelectIncomeCategory = con.prepareStatement(sql);
                 pstSelectIncomeCategory.setString(1, category);
-                ResultSet resultIncomeCategory = pstSelectIncomeCategory.executeQuery();
+                resultIncomeCategory = pstSelectIncomeCategory.executeQuery();
 
                 if (!resultIncomeCategory.next()) {
                     String queryInsertIncomeCategory = "INSERT INTO income_categories VALUES (?);";
@@ -226,6 +226,21 @@ public class SaveMoney extends javax.swing.JFrame {
                 System.out.println("Add new income category Failed " + e);
                 JOptionPane.showMessageDialog(null, "Something whent wrong");
                 return;
+            } finally {
+                if (resultIncomeCategory != null){
+                    try{
+                       resultIncomeCategory.close();
+                    } catch(Exception e){
+                        e.printStackTrace();
+                    }
+               }
+               if (pstSelectIncomeCategory != null){
+                   try{
+                       pstSelectIncomeCategory.close();
+                   } catch(Exception e){
+                       e.printStackTrace();
+                   }
+               }
             }
         }
 
@@ -245,6 +260,14 @@ public class SaveMoney extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Add new financial history Failed " + e);
             JOptionPane.showMessageDialog(null, "Something whent wrong");
+        } finally {
+            if (pstInsertFinancialHistory != null){
+                try{
+                   pstInsertFinancialHistory.close();
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+           }
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
