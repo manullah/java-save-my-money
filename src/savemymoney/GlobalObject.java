@@ -12,5 +12,6 @@ package savemymoney;
 public class GlobalObject {
 
     static int userId = 0;
-    
+    static int balance = 0;
+    static String username = "";
 }

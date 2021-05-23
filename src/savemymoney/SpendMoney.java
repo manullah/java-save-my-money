@@ -22,6 +22,7 @@ public class SpendMoney extends javax.swing.JFrame {
     PreparedStatement pstSelectSpendCategory = null;
     PreparedStatement pstInsertSpendCategory = null;
     PreparedStatement pstInsertFinancialHistory = null;
+    PreparedStatement pstUpdateUser = null;
     ResultSet resultSpendCategory = null;
     String category;
     
@@ -261,6 +262,14 @@ public class SpendMoney extends javax.swing.JFrame {
             pstInsertFinancialHistory.setString(4, dtf.format(LocalDateTime.now()));
             pstInsertFinancialHistory.setInt(5, globalObject.userId);
             pstInsertFinancialHistory.execute();
+
+            int balance = globalObject.balance - Integer.parseInt(txtNominal.getText());
+            String queryUpdateUser = "UPDATE users SET balance = (?) WHERE id = " + globalObject.userId;
+            pstUpdateUser = con.prepareStatement(queryUpdateUser);
+            pstUpdateUser.setInt(1, balance);
+            pstUpdateUser.execute();
+            
+            globalObject.balance = balance;
 
             new Home().setVisible(true);
             this.dispose();
