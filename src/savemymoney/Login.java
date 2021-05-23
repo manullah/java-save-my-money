@@ -19,10 +19,15 @@ public class Login extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
+    private GlobalObject globalObject;
+    
     /** Creates new form Login */
     public Login() {
         initComponents();
         
+        GlobalObject globalObject = new GlobalObject();
+        this.globalObject = globalObject;
+
         con = DbConnection.ConnectionDB();
     }
 
@@ -143,6 +148,8 @@ public class Login extends javax.swing.JFrame {
             rs = pst.executeQuery();
             
             if (rs.next()) {
+                globalObject.userId = rs.getInt("id");
+                
                 new Home().setVisible(true);
                 this.dispose();
             } else {

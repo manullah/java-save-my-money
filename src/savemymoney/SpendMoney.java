@@ -25,11 +25,16 @@ public class SpendMoney extends javax.swing.JFrame {
     ResultSet resultSpendCategory = null;
     String category;
     
+    private GlobalObject globalObject;
+    
     /**
      * Creates new form SpendMoney
      */
     public SpendMoney() {
         initComponents();
+        
+        GlobalObject globalObject = new GlobalObject();
+        this.globalObject = globalObject;
         
         con = DbConnection.ConnectionDB();
     }
@@ -248,12 +253,13 @@ public class SpendMoney extends javax.swing.JFrame {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
-            String queryInsertFinancialHistory = "INSERT INTO financial_histories VALUES (?, ?, ?, ?);";
+            String queryInsertFinancialHistory = "INSERT INTO financial_histories VALUES (?, ?, ?, ?, ?);";
             pstInsertFinancialHistory = con.prepareStatement(queryInsertFinancialHistory);
             pstInsertFinancialHistory.setString(1, "Spend");
             pstInsertFinancialHistory.setString(2, category);
             pstInsertFinancialHistory.setString(3, txtNominal.getText());
             pstInsertFinancialHistory.setString(4, dtf.format(LocalDateTime.now()));
+            pstInsertFinancialHistory.setInt(5, globalObject.userId);
             pstInsertFinancialHistory.execute();
 
             new Home().setVisible(true);
