@@ -149,6 +149,8 @@ public class Login extends javax.swing.JFrame {
             
             if (rs.next()) {
                 globalObject.userId = rs.getInt("id");
+                globalObject.username = rs.getString("username");
+                globalObject.balance = rs.getInt("balance");
                 
                 new Home().setVisible(true);
                 this.dispose();
