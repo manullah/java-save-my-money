@@ -18,16 +18,24 @@ import javax.swing.table.TableRowSorter;
  */
 public class Home extends javax.swing.JFrame {
 
-    private int id;
     private String type;
+    private String category;
     private int value;
     private String date;
     
+    private GlobalObject globalObject;
+    
     public Home() {
         initComponents();
+        
+        GlobalObject globalObject = new GlobalObject();
+        this.globalObject = globalObject;
+        
         munculTable(query);
     }
-    String query = "SELECT * FROM financial_histories ORDER BY date desc";
+
+    String query = "SELECT * FROM financial_histories WHERE user_id = " + globalObject.userId + " ORDER BY date desc";
+
     public ArrayList<Table> ListTables(String query) {
         ArrayList<Table> tableList = new ArrayList<Table>();
         java.sql.Connection con = (Connection)DbConnection.ConnectionDB();
@@ -39,8 +47,8 @@ public class Home extends javax.swing.JFrame {
             Table table;
             while(res.next()) {
                 table = new Table(
-                        res.getInt("id"),
                         res.getString("type"),
+                        res.getString("category"),
                         res.getInt("value"),
                         res.getString("date")
                 );
@@ -54,11 +62,11 @@ public class Home extends javax.swing.JFrame {
     public void munculTable(String OrderQuery) {
         ArrayList<Table> tables = ListTables(OrderQuery);
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new Object[] {"ID", "Jenis", "Jumlah", "Tanggal"});
+        model.setColumnIdentifiers(new Object[] {"Jenis", "Kategori", "Jumlah", "Tanggal"});
         Object[] row = new Object[4];
         for (int i = 0; i < tables.size(); i++) {
-            row[0] = tables.get(i).getId();
-            row[1] = tables.get(i).getType();
+            row[0] = tables.get(i).getType();
+            row[1] = tables.get(i).getCategory();
             row[2] = tables.get(i).getValue();
             row[3] = tables.get(i).getDate();
             
@@ -264,32 +272,32 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        new SaveMyMoney().setVisible(true);
+        new SaveMoney().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//        new SpendMyMoney().setVisible(true);
+        new SpendMoney().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        query = "SELECT * FROM financial_histories ORDER BY date ASC";
+        query = "SELECT * FROM financial_histories WHERE user_id = " + globalObject.userId + " ORDER BY date ASC";
         munculTable(query);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        query = "SELECT * FROM financial_histories ORDER BY date DESC";
+        query = "SELECT * FROM financial_histories WHERE user_id = " + globalObject.userId + " ORDER BY date DESC";
         munculTable(query);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        query = "SELECT * FROM financial_histories WHERE type = 'Save'";
+        query = "SELECT * FROM financial_histories WHERE type = 'Save' AND user_id = " + globalObject.userId;
         munculTable(query);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        query = "SELECT * FROM financial_histories WHERE type = 'Spend'";
+        query = "SELECT * FROM financial_histories WHERE type = 'Spend' AND user_id = " + globalObject.userId;
         munculTable(query);
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -301,7 +309,7 @@ public class Home extends javax.swing.JFrame {
         String tgl1, tgl2;
         tgl1 = jTextField1.getText();
         tgl2 = jTextField2.getText();
-        query = "SELECT * FROM financial_histories WHERE date BETWEEN '"+tgl1+"' AND '"+tgl2+"' ";
+        query = "SELECT * FROM financial_histories WHERE user_id = " + globalObject.userId + " AND date BETWEEN '" + tgl1 + "' AND '" + tgl2 + "'";
         munculTable(query);
     }//GEN-LAST:event_jButton5ActionPerformed
 

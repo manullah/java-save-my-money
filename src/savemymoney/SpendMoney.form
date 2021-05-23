@@ -27,16 +27,16 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="rdbBonus" min="-2" max="-2" attributes="0"/>
-                          <Component id="rdbGift" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="rdbSalary" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="rdbInstallment" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="rdbGame" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="rdbFoodAndDrink" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="rdbOther" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="txtNominal" min="-2" pref="100" max="-2" attributes="0"/>
@@ -62,11 +62,11 @@
                   <Component id="txtNominal" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="rdbSalary" min="-2" max="-2" attributes="0"/>
+              <Component id="rdbFoodAndDrink" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="rdbBonus" min="-2" max="-2" attributes="0"/>
+              <Component id="rdbInstallment" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="rdbGift" min="-2" max="-2" attributes="0"/>
+              <Component id="rdbGame" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="rdbOther" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -89,37 +89,37 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNominalActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="rdbSalary">
+    <Component class="javax.swing.JRadioButton" name="rdbFoodAndDrink">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="btnGroupCategory"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Salary"/>
+        <Property name="text" type="java.lang.String" value="Food &amp; Drink"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbSalaryActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbFoodAndDrinkActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="rdbBonus">
+    <Component class="javax.swing.JRadioButton" name="rdbInstallment">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="btnGroupCategory"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Bonus"/>
+        <Property name="text" type="java.lang.String" value="Installment"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbBonusActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbInstallmentActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="rdbGift">
+    <Component class="javax.swing.JRadioButton" name="rdbGame">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="btnGroupCategory"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Gift"/>
+        <Property name="text" type="java.lang.String" value="Game"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbGiftActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbGameActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rdbOther">

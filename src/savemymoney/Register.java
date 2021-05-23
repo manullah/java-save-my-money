@@ -119,16 +119,35 @@ public class Register extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         try {
-            String sql = "INSERT INTO users VALUES (?, ?);";
+            String sql = "INSERT INTO users (username, password, ballance) VALUES (?, ?, ?);";
         
             pst = con.prepareStatement(sql);
             pst.setString(1, txtUsername.getText());
             pst.setString(2, txtPassword.getText());
+            pst.setInt(3, 0);
             pst.execute();
             
+            new Login().setVisible(true);
+            this.dispose();
+
             System.out.println("New user is registered!");
         } catch (Exception e) {
             System.out.println("Register Failed " + e);
+        } finally {
+            if (rs != null){
+                 try{
+                    rs.close();
+                 } catch(Exception e){
+                     e.printStackTrace();
+                 }
+            }
+            if (pst != null){
+                try{
+                    pst.close();
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
 

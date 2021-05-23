@@ -5,30 +5,32 @@
  */
 package savemymoney;
 
-import java.sql.*;
-import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author pengg
  */
-public class SaveMoney extends javax.swing.JFrame {
+public class SpendMoney extends javax.swing.JFrame {
 
     Connection con = null;
-    PreparedStatement pstSelectSaveCategory = null;
-    PreparedStatement pstInsertSaveCategory = null;
+    PreparedStatement pstSelectSpendCategory = null;
+    PreparedStatement pstInsertSpendCategory = null;
     PreparedStatement pstInsertFinancialHistory = null;
-    ResultSet resultSaveCategory = null;
+    ResultSet resultSpendCategory = null;
     String category;
     
     private GlobalObject globalObject;
     
     /**
-     * Creates new form SaveMoney
+     * Creates new form SpendMoney
      */
-    public SaveMoney() {
+    public SpendMoney() {
         initComponents();
         
         GlobalObject globalObject = new GlobalObject();
@@ -49,9 +51,9 @@ public class SaveMoney extends javax.swing.JFrame {
         btnGroupCategory = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         txtNominal = new javax.swing.JTextField();
-        rdbSalary = new javax.swing.JRadioButton();
-        rdbBonus = new javax.swing.JRadioButton();
-        rdbGift = new javax.swing.JRadioButton();
+        rdbFoodAndDrink = new javax.swing.JRadioButton();
+        rdbInstallment = new javax.swing.JRadioButton();
+        rdbGame = new javax.swing.JRadioButton();
         rdbOther = new javax.swing.JRadioButton();
         txtOther = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -66,27 +68,27 @@ public class SaveMoney extends javax.swing.JFrame {
             }
         });
 
-        btnGroupCategory.add(rdbSalary);
-        rdbSalary.setText("Salary");
-        rdbSalary.addActionListener(new java.awt.event.ActionListener() {
+        btnGroupCategory.add(rdbFoodAndDrink);
+        rdbFoodAndDrink.setText("Food & Drink");
+        rdbFoodAndDrink.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbSalaryActionPerformed(evt);
+                rdbFoodAndDrinkActionPerformed(evt);
             }
         });
 
-        btnGroupCategory.add(rdbBonus);
-        rdbBonus.setText("Bonus");
-        rdbBonus.addActionListener(new java.awt.event.ActionListener() {
+        btnGroupCategory.add(rdbInstallment);
+        rdbInstallment.setText("Installment");
+        rdbInstallment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbBonusActionPerformed(evt);
+                rdbInstallmentActionPerformed(evt);
             }
         });
 
-        btnGroupCategory.add(rdbGift);
-        rdbGift.setText("Gift");
-        rdbGift.addActionListener(new java.awt.event.ActionListener() {
+        btnGroupCategory.add(rdbGame);
+        rdbGame.setText("Game");
+        rdbGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbGiftActionPerformed(evt);
+                rdbGameActionPerformed(evt);
             }
         });
 
@@ -121,9 +123,9 @@ public class SaveMoney extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rdbBonus)
-                            .addComponent(rdbGift)
-                            .addComponent(rdbSalary)
+                            .addComponent(rdbInstallment)
+                            .addComponent(rdbGame)
+                            .addComponent(rdbFoodAndDrink)
                             .addComponent(rdbOther)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -143,11 +145,11 @@ public class SaveMoney extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtNominal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rdbSalary)
+                .addComponent(rdbFoodAndDrink)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rdbBonus)
+                .addComponent(rdbInstallment)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rdbGift)
+                .addComponent(rdbGame)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rdbOther)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -160,12 +162,30 @@ public class SaveMoney extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rdbBonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbBonusActionPerformed
-        if (rdbBonus.isSelected()) {
-            category = rdbBonus.getText();
+    private void txtNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNominalActionPerformed
+
+    }//GEN-LAST:event_txtNominalActionPerformed
+
+    private void rdbFoodAndDrinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFoodAndDrinkActionPerformed
+        if (rdbFoodAndDrink.isSelected()) {
+            category = rdbFoodAndDrink.getText();
             txtOther.setEditable(false);
         }
-    }//GEN-LAST:event_rdbBonusActionPerformed
+    }//GEN-LAST:event_rdbFoodAndDrinkActionPerformed
+
+    private void rdbInstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInstallmentActionPerformed
+        if (rdbInstallment.isSelected()) {
+            category = rdbInstallment.getText();
+            txtOther.setEditable(false);
+        }
+    }//GEN-LAST:event_rdbInstallmentActionPerformed
+
+    private void rdbGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbGameActionPerformed
+        if (rdbGame.isSelected()) {
+            category = rdbGame.getText();
+            txtOther.setEditable(false);
+        }
+    }//GEN-LAST:event_rdbGameActionPerformed
 
     private void rdbOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbOtherActionPerformed
         if (rdbOther.isSelected()) {
@@ -173,27 +193,9 @@ public class SaveMoney extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_rdbOtherActionPerformed
 
-    private void rdbSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbSalaryActionPerformed
-        if (rdbSalary.isSelected()) {
-            category = rdbSalary.getText();
-            txtOther.setEditable(false);
-        }
-    }//GEN-LAST:event_rdbSalaryActionPerformed
-
     private void txtOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOtherActionPerformed
-        
+
     }//GEN-LAST:event_txtOtherActionPerformed
-
-    private void txtNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNominalActionPerformed
-        
-    }//GEN-LAST:event_txtNominalActionPerformed
-
-    private void rdbGiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbGiftActionPerformed
-        if (rdbGift.isSelected()) {
-            category = rdbGift.getText();
-            txtOther.setEditable(false);
-        }
-    }//GEN-LAST:event_rdbGiftActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (txtNominal.getText().isEmpty()) {
@@ -211,56 +213,55 @@ public class SaveMoney extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "You must fill the other field!");
                 return;
             }
-            
-            
+
             try {
                 category = txtOther.getText();
-                String querySelectSaveCategory = "SELECT * from save_categories WHERE name LIKE ?;";
-                pstSelectSaveCategory = con.prepareStatement(querySelectSaveCategory);
-                pstSelectSaveCategory.setString(1, category);
-                resultSaveCategory = pstSelectSaveCategory.executeQuery();
+                String querySelectSpendCategory = "SELECT * from spend_categories WHERE name LIKE ?;";
+                pstSelectSpendCategory = con.prepareStatement(querySelectSpendCategory);
+                pstSelectSpendCategory.setString(1, category);
+                resultSpendCategory = pstSelectSpendCategory.executeQuery();
 
-                if (!resultSaveCategory.next()) {
-                    String queryInsertSaveCategory = "INSERT INTO save_categories VALUES (?);";
-                    pstInsertSaveCategory = con.prepareStatement(queryInsertSaveCategory);
-                    pstInsertSaveCategory.setString(1, category);
-                    pstInsertSaveCategory.execute();
-                    System.out.println("New save category is created!");
+                if (!resultSpendCategory.next()) {
+                    String queryInsertSpendCategory = "INSERT INTO spend_categories VALUES (?);";
+                    pstInsertSpendCategory = con.prepareStatement(queryInsertSpendCategory);
+                    pstInsertSpendCategory.setString(1, category);
+                    pstInsertSpendCategory.execute();
+                    System.out.println("New spend category is created!");
                 }
             } catch (Exception e) {
-                System.out.println("Add new save category Failed " + e);
+                System.out.println("Add new spend category Failed " + e);
                 JOptionPane.showMessageDialog(null, "Something whent wrong");
                 return;
             } finally {
-                if (resultSaveCategory != null){
+                if (resultSpendCategory != null){
                     try{
-                       resultSaveCategory.close();
+                        resultSpendCategory.close();
                     } catch(Exception e){
                         e.printStackTrace();
                     }
-               }
-               if (pstSelectSaveCategory != null){
-                   try{
-                       pstSelectSaveCategory.close();
-                   } catch(Exception e){
-                       e.printStackTrace();
-                   }
-               }
+                }
+                if (pstSelectSpendCategory != null){
+                    try{
+                        pstSelectSpendCategory.close();
+                    } catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
         try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");  
-            
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+
             String queryInsertFinancialHistory = "INSERT INTO financial_histories VALUES (?, ?, ?, ?, ?);";
             pstInsertFinancialHistory = con.prepareStatement(queryInsertFinancialHistory);
-            pstInsertFinancialHistory.setString(1, "Save");
+            pstInsertFinancialHistory.setString(1, "Spend");
             pstInsertFinancialHistory.setString(2, category);
             pstInsertFinancialHistory.setString(3, txtNominal.getText());
             pstInsertFinancialHistory.setString(4, dtf.format(LocalDateTime.now()));
             pstInsertFinancialHistory.setInt(5, globalObject.userId);
             pstInsertFinancialHistory.execute();
-           
+
             new Home().setVisible(true);
             this.dispose();
         } catch (Exception e) {
@@ -269,13 +270,12 @@ public class SaveMoney extends javax.swing.JFrame {
         } finally {
             if (pstInsertFinancialHistory != null){
                 try{
-                   pstInsertFinancialHistory.close();
+                    pstInsertFinancialHistory.close();
                 } catch(Exception e){
                     e.printStackTrace();
                 }
-           }
+            }
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -295,20 +295,20 @@ public class SaveMoney extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SaveMoney.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SpendMoney.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SaveMoney.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SpendMoney.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SaveMoney.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SpendMoney.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SaveMoney.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SpendMoney.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SaveMoney().setVisible(true);
+                new SpendMoney().setVisible(true);
             }
         });
     }
@@ -317,10 +317,10 @@ public class SaveMoney extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGroupCategory;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton rdbBonus;
-    private javax.swing.JRadioButton rdbGift;
+    private javax.swing.JRadioButton rdbFoodAndDrink;
+    private javax.swing.JRadioButton rdbGame;
+    private javax.swing.JRadioButton rdbInstallment;
     private javax.swing.JRadioButton rdbOther;
-    private javax.swing.JRadioButton rdbSalary;
     private javax.swing.JTextField txtNominal;
     private javax.swing.JTextField txtOther;
     // End of variables declaration//GEN-END:variables
