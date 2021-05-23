@@ -20,6 +20,7 @@ public class SaveMoney extends javax.swing.JFrame {
     PreparedStatement pstSelectSaveCategory = null;
     PreparedStatement pstInsertSaveCategory = null;
     PreparedStatement pstInsertFinancialHistory = null;
+    PreparedStatement pstUpdateUser = null;
     ResultSet resultSaveCategory = null;
     String category;
     
@@ -260,7 +261,15 @@ public class SaveMoney extends javax.swing.JFrame {
             pstInsertFinancialHistory.setString(4, dtf.format(LocalDateTime.now()));
             pstInsertFinancialHistory.setInt(5, globalObject.userId);
             pstInsertFinancialHistory.execute();
+            
+            int balance = globalObject.balance + Integer.parseInt(txtNominal.getText());
+            String queryUpdateUser = "UPDATE users SET balance = (?) WHERE id = " + globalObject.userId;
+            pstUpdateUser = con.prepareStatement(queryUpdateUser);
+            pstUpdateUser.setInt(1, balance);
+            pstUpdateUser.execute();
            
+            globalObject.balance = balance;
+            
             new Home().setVisible(true);
             this.dispose();
         } catch (Exception e) {
